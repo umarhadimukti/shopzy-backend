@@ -8,7 +8,6 @@ export class UserController {
         private readonly userService: UserService,
     ) {}
 
-
     @Post('/new')
     public async create(
         @Body() request: CreateUserRequest,
