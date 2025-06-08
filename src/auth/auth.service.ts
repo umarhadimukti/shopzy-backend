@@ -16,6 +16,13 @@ export class AuthService {
             if (!isAuthenticated) {
                 throw new UnauthorizedException();
             }
+
+            return {
+                data: {
+                    email: user.email,
+                    name: user.name,
+                }
+            }
         } catch (error) {
             throw new UnauthorizedException('Credentials are not valid');
         }
