@@ -38,8 +38,6 @@ export class AuthService {
         const jwtExpiration = ms(this.configService.getOrThrow('JWT_EXPIRATION'));
         const expires = new Date(Date.now() + jwtExpiration);
 
-        console.log(user)
-
         const tokenPayload: TokenPayload = { userId: user.id };
         const token = this.jwtService.sign(tokenPayload);
 
