@@ -2,36 +2,36 @@
 
 #### 1. Installed Packages
 
-```bash
+```sh
 pnpm add bcrypt ms
 ```
 
-```bash
+```sh
 pnpm add -D @types/bcrypt @types/ms
 ```
 
-```bash
+```sh
 pnpm add @nestjs/passport @nestjs/jwt passport passport-jwt passport-local
 ```
 
-```bash
+```sh
 pnpm add -D @types/passport @types/passport-jwt @types/passport-local
 ```
 
 #### 2. Create Auth Resources
 
-```bash
+```sh
 nest g module auth
 ```
-```bash
+```sh
 nest g controller auth
 ```
-```bash
+```sh
 nest g service auth
 ```
 
 #### 3. Registering some modules in auth module
-```bash
+```js
 @Module({
   imports: [
     UserModule,
@@ -55,7 +55,7 @@ export class AuthModule {}
 ```
 
 #### 4. Create new decorator to get current user
-```bash
+```js
 const getCurrentUserByContext = (context: ExecutionContext) => {
     return context.switchToHttp().getRequest().user;
 };
@@ -68,13 +68,13 @@ export const CurrentUser = createParamDecorator(
 #### 5. Create Local Strategy
 
 *auth/guards/local-auth.guard.ts*
-```bash
+```js
 @Injectable()
 export class LocalAuthGuard extends AuthGuard('local') {}
 ```
 
 *auth/strategies/local.strategy.ts*
-```bash
+```js
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
     constructor(private readonly authService: AuthService) {
@@ -88,14 +88,14 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
 ```
 
 #### 6. Create Auth Interface
-```bash
+```js
 export interface TokenPayload {
     userId: number;
 };
 ```
 
 #### 7. Create Auth Service
-```bash
+```js
 @Injectable()
 export class AuthService {
     constructor(
@@ -145,7 +145,7 @@ export class AuthService {
 ```
 
 #### 8. Create Auth Controller
-```bash
+```js
 @Controller('auth')
 export class AuthController {
     constructor(
