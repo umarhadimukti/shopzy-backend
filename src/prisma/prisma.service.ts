@@ -4,32 +4,33 @@ import { OnModuleInit } from '@nestjs/common';
 import { Logger } from 'nestjs-pino';
 
 @Injectable()
-export class PrismaService extends PrismaClient<Prisma.PrismaClientOptions, string> implements OnModuleInit, OnModuleDestroy {
-    constructor(
-        private readonly logger: Logger
-    ) {
-        super({
-            log: [
-                { 'emit': 'event', 'level': 'query' },
-                { 'emit': 'event', 'level': 'info' },
-                { 'emit': 'event', 'level': 'warn' },
-                { 'emit': 'event', 'level': 'error' },
-            ],
-        });
-    }
-    async onModuleInit() {
-        this.$on('query', (e) => {
-            this.logger.debug(`Query [${e.query}] : ${e.params}`);
-        });
-        
-        this.$on('error', (e) => {
-            this.logger.error(`Error ${e.message}`);
-        })
+export class PrismaService
+  extends PrismaClient<Prisma.PrismaClientOptions, string>
+  implements OnModuleInit, OnModuleDestroy
+{
+  constructor(private readonly logger: Logger) {
+    super({
+      log: [
+        { emit: 'event', level: 'query' },
+        { emit: 'event', level: 'info' },
+        { emit: 'event', level: 'warn' },
+        { emit: 'event', level: 'error' },
+      ],
+    });
+  }
+  async onModuleInit() {
+    this.$on('query', (e) => {
+      this.logger.debug(`Query [${e.query}] : ${e.params}`);
+    });
 
-        await this.$connect();
-    }
+    this.$on('error', (e) => {
+      this.logger.error(`Error ${e.message}`);
+    });
 
-    async onModuleDestroy() {
-        await this.$disconnect();
-    }
+    await this.$connect();
+  }
+
+  async onModuleDestroy() {
+    await this.$disconnect();
+  }
 }

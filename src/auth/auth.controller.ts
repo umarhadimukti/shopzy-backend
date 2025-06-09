@@ -7,22 +7,19 @@ import { Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
-    constructor(
-        private readonly authService: AuthService
-    ) {}
+  constructor(private readonly authService: AuthService) {}
 
-    /**
-     * handle login route
-     * @UseGuards
-     * @Post
-     */
-    @UseGuards(LocalAuthGuard)
-    @Post('/login')
-    public async login(
-        @CurrentUser() user: User,
-        @Res({ passthrough: true }) response: Response,
-    ) {
-        return this.authService.login(user, response);
-    }
-
+  /**
+   * handle login route
+   * @UseGuards
+   * @Post
+   */
+  @UseGuards(LocalAuthGuard)
+  @Post('/login')
+  public login(
+    @CurrentUser() user: User,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    return this.authService.login(user, response);
+  }
 }

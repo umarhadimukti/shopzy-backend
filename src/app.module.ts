@@ -11,10 +11,13 @@ import { AuthModule } from './auth/auth.module';
     LoggerModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => {
-        const isProduction: boolean = configService.get('NODE_ENV') === 'production';
+        const isProduction: boolean =
+          configService.get('NODE_ENV') === 'production';
         return {
           pinoHttp: {
-            transport: isProduction ? undefined : { target: 'pino-pretty', options: { singleLine: true } },
+            transport: isProduction
+              ? undefined
+              : { target: 'pino-pretty', options: { singleLine: true } },
             level: isProduction ? 'info' : 'debug',
           },
         };
