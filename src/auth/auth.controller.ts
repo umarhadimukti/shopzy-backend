@@ -5,7 +5,7 @@ import { CurrentUser } from './current-user.decorator';
 import { User } from '@prisma/client';
 import { Response } from 'express';
 
-@Controller('auth')
+@Controller('/api/auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
