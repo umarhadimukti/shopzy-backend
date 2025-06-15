@@ -15,7 +15,7 @@ export class UserService {
   public async create(
     request: CreateUserRequest,
   ): Promise<{ name: string; email: string }> {
-    this.logger.log(`creating user ${request.name}..`);
+    this.logger.log(`Creating user ${request.name}..`);
 
     try {
       return await this.prismaService.user.create({
@@ -31,7 +31,7 @@ export class UserService {
     } catch (error) {
       console.error(error);
       if (error.code === 'P2002') {
-        throw new UnprocessableEntityException('email already exists');
+        throw new UnprocessableEntityException('Email already exists');
       }
       throw error;
     }
