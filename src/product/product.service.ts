@@ -3,6 +3,7 @@ import { Logger } from 'nestjs-pino';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductRequest } from './dto/create-product.request';
 import { Product } from '@prisma/client';
+import { Decimal } from 'decimal.js';
 
 @Injectable()
 export class ProductService {
@@ -18,9 +19,11 @@ export class ProductService {
         this.logger.log('Creating new product..');
 
         try {
+            const price = new Decimal(request.price);
             const createdProduct = await this.prismaService.product.create({
                 data: {
                     ...request,
+                    price,
                     userId,
                 },
             });
