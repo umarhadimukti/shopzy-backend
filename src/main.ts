@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
 import { Logger as PinoLogger } from 'nestjs-pino';
 import cookieParser from 'cookie-parser';
+import { DecimalInterceptor } from './common/decimal/decimal.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,6 +15,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
   app.use(cookieParser());
+
+  app.useGlobalInterceptors(new DecimalInterceptor());
 
   const configService = app.get<ConfigService>(ConfigService);
   await app.listen(configService.get<number>('PORT') || 3001);
