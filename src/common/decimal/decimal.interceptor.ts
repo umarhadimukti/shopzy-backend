@@ -15,7 +15,14 @@ export class DecimalInterceptor implements NestInterceptor {
         } else if (data && typeof data === 'object') {
             const updated = {...data};
             if (Object.hasOwn(updated, 'price') && !isNaN(+updated.price)) {
-                updated.price = (+updated.price).toFixed(3);
+                updated.price = Intl.NumberFormat(
+                    'id-ID',
+                    {
+                        style: 'currency',
+                        currency: 'IDR',
+                        minimumFractionDigits: 0,
+                    }
+                ).format(+updated.price);
             }
             return updated;
         }
