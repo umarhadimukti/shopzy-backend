@@ -4,7 +4,6 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductRequest } from './dto/create-product.request';
 import { Product } from '@prisma/client';
 import { Decimal } from 'decimal.js';
-import { TokenPayload } from 'src/auth/auth.interface';
 
 @Injectable()
 export class ProductService {
