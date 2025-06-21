@@ -1,4 +1,5 @@
 ## 📂  Project Structure
+```
 project-root/
 ├── dist/                   # Compiled output
 ├── docs/                   # Documentation files
@@ -26,14 +27,13 @@ project-root/
 ├── README.md               # This file
 ├── tsconfig.build.json     # TypeScript config for build
 └── tsconfig.json           # TypeScript base config
+```
 
 ## 🚀 Getting Started
 
 ```bash
 $ pnpm install
 ```
-
-## Compile and run the project
 
 ```bash
 # development
