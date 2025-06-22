@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, FileTypeValidator, Get, MaxFileSizeValidator, ParseFilePipe, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreateProductRequest } from './dto/create-product.request';
@@ -43,7 +43,14 @@ export class ProductController {
             }),
         })
     )
-    public async uploadProductImage() {
-
-    }
+    public async uploadProductImage(
+        @UploadedFile(
+            new ParseFilePipe({
+                validators: [
+                    new MaxFileSizeValidator({ maxSize: 500000 }),
+                    new FileTypeValidator({ fileType: 'image/jpeg' }),
+                ]
+            })
+        ) _file: Express.Multer.File
+    ) {}
 }
