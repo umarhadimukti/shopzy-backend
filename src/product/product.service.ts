@@ -4,6 +4,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductRequest } from './dto/create-product.request';
 import { Product } from '@prisma/client';
 import { Decimal } from 'decimal.js';
+import fs from 'fs/promises';
+import { join } from 'path';
 
 @Injectable()
 export class ProductService {
@@ -35,10 +37,27 @@ export class ProductService {
         }
     }
 
-    public async getProducts(userId: number): Promise<Product[]> {
-        const products = await this.prismaService.product.findMany({ where: { userId }});
+    public async getProducts(): Promise<Product[]> {
+        const products = await this.prismaService.product.findMany();
 
-        return products;
+        return Promise.all(
+            products.map(async (product) => ({
+                ...product,
+                imageExists: await this.imageExists(product.id),
+            })),
+        );
+    }
+
+    private async imageExists(productId: number): Promise<boolean> {
+        try {
+            await fs.access(
+                join(__dirname, '../../', `public/products/${productId}.jpg`),
+                fs.constants.F_OK,
+            );
+            return true;
+        } catch (error) {
+            return false;
+        }
     }
     
 }

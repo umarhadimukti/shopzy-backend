@@ -28,7 +28,7 @@ export class ProductController {
     public async getProducts(
         @CurrentUser() user: TokenPayload,
     ) {
-        return this.productService.getProducts(user.userId);
+        return this.productService.getProducts();
     }
 
     @Post('/:productId/image')
