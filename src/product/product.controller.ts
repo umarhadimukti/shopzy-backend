@@ -49,7 +49,7 @@ export class ProductController {
                 validators: [
                     new MaxFileSizeValidator({ maxSize: 500000 }),
                     new FileTypeValidator({ fileType: 'image/jpeg' }),
-                ]
+                ],
             })
         ) _file: Express.Multer.File
     ) {}
