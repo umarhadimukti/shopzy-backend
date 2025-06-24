@@ -1,4 +1,4 @@
-import { Injectable, Param } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Logger } from 'nestjs-pino';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductRequest } from './dto/create-product.request';
@@ -6,6 +6,8 @@ import { Product } from '@prisma/client';
 import { Decimal } from 'decimal.js';
 import fs from 'fs/promises';
 import { join } from 'path';
+import { NotFoundException } from '@nestjs/common';
+import { ProductResponse } from './product.interface';
 
 @Injectable()
 export class ProductService {
@@ -60,10 +62,14 @@ export class ProductService {
         }
     }
 
-    public async getProduct(productId: number) {
-        return {
-            ...( await this.prismaService.product.findUniqueOrThrow({ where: { id: productId } })),
-            imageExists: await this.imageExists(productId),
+    public async getProduct(productId: number): Promise<ProductResponse> {
+        try {
+            return {
+                ...( await this.prismaService.product.findUniqueOrThrow({ where: { id: productId } })),
+                imageExists: await this.imageExists(productId),
+            }
+        } catch (error) {
+            throw new NotFoundException(`Product not found with ID: ${productId}`);
         }
     }
     
