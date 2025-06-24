@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Param } from '@nestjs/common';
 import { Logger } from 'nestjs-pino';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductRequest } from './dto/create-product.request';
@@ -57,6 +57,13 @@ export class ProductService {
             return true;
         } catch (error) {
             return false;
+        }
+    }
+
+    public async getProduct(productId: number) {
+        return {
+            ...( await this.prismaService.product.findUniqueOrThrow({ where: { id: productId } })),
+            imageExists: await this.imageExists(productId),
         }
     }
     
