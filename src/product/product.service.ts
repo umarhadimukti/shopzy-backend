@@ -53,7 +53,7 @@ export class ProductService {
     private async imageExists(productId: number): Promise<boolean> {
         try {
             await fs.access(
-                join(__dirname, '../../', `public/products/${productId}.jpg`),
+                join(__dirname, '../../', `public/images/products/${productId}.jpg`),
                 fs.constants.F_OK,
             );
             return true;

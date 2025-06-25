@@ -36,7 +36,7 @@ export class ProductController {
     @UseInterceptors(
         FileInterceptor('image', {
             storage: diskStorage({
-                destination: 'public/products',
+                destination: 'public/images/products',
                 filename: (req, file, callback) => {
                     callback(null, `${req.params.productId}${extname(file.originalname)}`);
                 },
