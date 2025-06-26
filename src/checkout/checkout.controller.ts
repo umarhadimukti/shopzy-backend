@@ -1,4 +1,19 @@
-import { Controller } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { CheckoutService } from './checkout.service';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { CreateSessionRequest } from './dto/create-session.request';
 
 @Controller('checkout')
-export class CheckoutController {}
+export class CheckoutController {
+    constructor(
+        private readonly checkoutService: CheckoutService
+    ) {}
+
+    @Post('/session')
+    @UseGuards(JwtAuthGuard)
+    public async checkoutSession(
+        @Body() request: CreateSessionRequest,
+    ) {
+        return this.checkoutService.createCheckoutSession(request.productId);
+    }
+}
