@@ -3,7 +3,7 @@ import { CheckoutService } from './checkout.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreateSessionRequest } from './dto/create-session.request';
 
-@Controller('checkout')
+@Controller('/api/checkout')
 export class CheckoutController {
     constructor(
         private readonly checkoutService: CheckoutService

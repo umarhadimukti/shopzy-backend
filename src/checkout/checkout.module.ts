@@ -3,9 +3,10 @@ import { CheckoutController } from './checkout.controller';
 import { CheckoutService } from './checkout.service';
 import Stripe from 'stripe';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ProductModule } from 'src/product/product.module';
 
 @Module({
-  imports: [ConfigModule],
+  imports: [ConfigModule, ProductModule],
   controllers: [CheckoutController],
   providers: [
     CheckoutService,
