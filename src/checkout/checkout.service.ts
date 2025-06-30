@@ -21,7 +21,7 @@ export class CheckoutService {
             line_items: [
                 {
                     price_data: {
-                        currency: 'myr',
+                        currency: 'usd',
                         unit_amount: Math.round(product.price.toNumber() * 100),
                         product_data: {
                             name: product.name,
