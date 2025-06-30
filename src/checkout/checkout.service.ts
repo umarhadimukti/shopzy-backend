@@ -36,4 +36,10 @@ export class CheckoutService {
             cancel_url: this.configService.getOrThrow('STRIPE_CANCEL_URL') as string,
         });
     }
+
+    public async handleCheckoutWebhook(event: any) {
+        this.logger.log(`Handling checkout webhook event`);
+
+        console.log(event);
+    }
 }
