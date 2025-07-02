@@ -18,6 +18,9 @@ export class CheckoutService {
 
         const product = await this.productService.getProduct(productId);
         return this.stripe.checkout.sessions.create({
+            metadata: {
+                productId,
+            },
             line_items: [
                 {
                     price_data: {
@@ -40,6 +43,11 @@ export class CheckoutService {
     public async handleCheckoutWebhook(event: any) {
         this.logger.log(`Handling checkout webhook event`);
 
-        console.log(event);
+        if (event.type !== 'checkout.session.completed') {
+            return;
+        }
+
+        const session = await this.stripe.checkout.sessions.retrieve(event.data.object.id);
+        
     }
 }

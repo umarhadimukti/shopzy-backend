@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Logger } from 'nestjs-pino';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductRequest } from './dto/create-product.request';
-import { Product } from '@prisma/client';
+import { Prisma, Product } from '@prisma/client';
 import { Decimal } from 'decimal.js';
 import fs from 'fs/promises';
 import { join } from 'path';
@@ -70,6 +70,20 @@ export class ProductService {
             }
         } catch (error) {
             throw new NotFoundException(`Product not found with ID: ${productId}`);
+        }
+    }
+
+    public async updateProduct(productId: number, request: Prisma.ProductUpdateInput): Promise<Product> {
+        this.logger.log(`Updating product with ID: ${productId}`);
+
+        try {
+            return await this.prismaService.product.update({
+                where: { id: productId },
+                data: request,
+            });
+        } catch (error) {
+            this.logger.error(`Failed to update product with ID ${productId}: ${error}`);
+            throw error;
         }
     }
     
