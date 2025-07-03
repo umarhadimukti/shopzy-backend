@@ -49,5 +49,13 @@ export class CheckoutService {
 
         const session = await this.stripe.checkout.sessions.retrieve(event.data.object.id);
         
+        if (!session.metadata || !session.metadata.productId) {
+            this.logger.error('No product ID found in session metadata');
+            return;
+        }
+        await this.productService.updateProduct(
+            parseInt(session.metadata.productId),
+            { sold: true }
+        );
     }
 }
