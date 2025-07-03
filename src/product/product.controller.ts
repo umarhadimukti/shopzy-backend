@@ -1,4 +1,4 @@
-import { Body, Controller, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, ParseIntPipe, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, ParseIntPipe, Post, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreateProductRequest } from './dto/create-product.request';
@@ -26,9 +26,9 @@ export class ProductController {
     @Get('/')
     @UseGuards(JwtAuthGuard)
     public async getProducts(
-        @CurrentUser() user: TokenPayload,
+        @Query('status') status?: string,
     ) {
-        return this.productService.getProducts();
+        return this.productService.getProducts(status);
     }
 
     @Post('/:productId/image')
