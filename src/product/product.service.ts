@@ -8,12 +8,14 @@ import fs from 'fs/promises';
 import { join } from 'path';
 import { NotFoundException } from '@nestjs/common';
 import { ProductResponse } from './product.interface';
+import { ProductGateway } from './product.gateway';
 
 @Injectable()
 export class ProductService {
     constructor(
         private readonly logger: Logger,
         private readonly prismaService: PrismaService,
+        private readonly productGateway: ProductGateway,
     ) {}
 
     public async createNewProduct(
@@ -31,6 +33,7 @@ export class ProductService {
                     userId,
                 },
             });
+            this.productGateway.handleProductUpdated();
             return createdProduct;
         } catch (error) {
             this.logger.error(`Failed to create new product: ${error}`);
@@ -83,10 +86,13 @@ export class ProductService {
         this.logger.log(`Updating product with ID: ${productId}`);
 
         try {
-            return await this.prismaService.product.update({
+            const updatedProduct = await this.prismaService.product.update({
                 where: { id: productId },
                 data: request,
             });
+            this.productGateway.handleProductUpdated();
+
+            return updatedProduct;
         } catch (error) {
             this.logger.error(`Failed to update product with ID ${productId}: ${error}`);
             throw error;
