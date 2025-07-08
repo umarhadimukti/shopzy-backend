@@ -37,6 +37,10 @@ export class AuthService {
     }
   }
 
+  public verifyToken(jwt: string) {
+    this.jwtService.verify(jwt);
+  }
+
   public login(user: User, response: Response) {
     const jwtExpiration = ms(this.configService.getOrThrow('JWT_EXPIRATION'));
     const expires = new Date(Date.now() + jwtExpiration);
