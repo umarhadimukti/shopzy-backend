@@ -37,8 +37,8 @@ export class AuthService {
     }
   }
 
-  public verifyToken(jwt: string) {
-    this.jwtService.verify(jwt);
+  public async verifyToken(jwt: string) {
+    await this.jwtService.verify(jwt);
   }
 
   public login(user: User, response: Response) {

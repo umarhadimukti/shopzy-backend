@@ -20,9 +20,9 @@ export class ProductGateway {
         this.server.emit('productUpdated');
     }
 
-    public handleConnection(client: Socket) {
+    public  handleConnection(client: Socket) {
         try {
-            this.authService.verifyToken(client.handshake.auth.Authentication.value);
+            this.authService.verifyToken(client.handshake.auth.Authentication?.value);
         } catch (error) {
             throw new WsException('Unauthorized');
         }
