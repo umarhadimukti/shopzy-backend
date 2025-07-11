@@ -1,5 +1,5 @@
-import { Product } from "@prisma/client";
+import { Product } from '@prisma/client';
 
 export interface ProductResponse extends Product {
-    imageExists: boolean;
+  imageExists: boolean;
 }

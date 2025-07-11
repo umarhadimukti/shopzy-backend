@@ -16,7 +16,7 @@ import { ProductModule } from 'src/product/product.module';
         return new Stripe(configService.getOrThrow('STRIPE_SECRET_KEY'));
       },
       inject: [ConfigService],
-    }
+    },
   ],
 })
 export class CheckoutModule {}

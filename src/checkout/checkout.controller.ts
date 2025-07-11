@@ -5,22 +5,16 @@ import { CreateSessionRequest } from './dto/create-session.request';
 
 @Controller('/api/checkout')
 export class CheckoutController {
-    constructor(
-        private readonly checkoutService: CheckoutService
-    ) {}
+  constructor(private readonly checkoutService: CheckoutService) {}
 
-    @Post('/session')
-    @UseGuards(JwtAuthGuard)
-    public async checkoutSession(
-        @Body() request: CreateSessionRequest,
-    ) {
-        return this.checkoutService.createCheckoutSession(request.productId);
-    }
+  @Post('/session')
+  @UseGuards(JwtAuthGuard)
+  public async checkoutSession(@Body() request: CreateSessionRequest) {
+    return this.checkoutService.createCheckoutSession(request.productId);
+  }
 
-    @Post('/webhook')
-    public async checkoutWebhook(
-        @Body() event: any,
-    ) {
-        return this.checkoutService.handleCheckoutWebhook(event);
-    }
+  @Post('/webhook')
+  public async checkoutWebhook(@Body() event: any) {
+    return this.checkoutService.handleCheckoutWebhook(event);
+  }
 }
