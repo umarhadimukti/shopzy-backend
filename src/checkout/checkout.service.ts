@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Logger } from 'nestjs-pino';
 import Stripe from 'stripe';
-import { ProductService } from 'src/product/product.service';
+import { ProductService } from '../product/product.service';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()

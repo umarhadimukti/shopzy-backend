@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Logger } from 'nestjs-pino';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateProductRequest } from './dto/create-product.request';
 import { Prisma, Product } from '@prisma/client';
 import { Decimal } from 'decimal.js';
