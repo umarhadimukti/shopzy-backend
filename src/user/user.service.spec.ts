@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
 import { Logger } from 'nestjs-pino';
+import { PrismaService } from '../prisma/prisma.service';
 
 describe('UserService', () => {
   let service: UserService;
@@ -19,6 +20,15 @@ describe('UserService', () => {
             verbose: jest.fn(),
           },
         },
+        {
+          provide: PrismaService,
+          useValue: {
+            user: {
+              create: jest.fn(),
+              getUser: jest.fn(),
+            }
+          }
+        }
       ],
     }).compile();
 

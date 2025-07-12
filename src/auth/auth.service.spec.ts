@@ -24,8 +24,8 @@ describe('AuthService', () => {
         {
           provide: UserService,
           useValue: {
-            findByEmail: jest.fn(),
             create: jest.fn(),
+            getUser: jest.fn(),
           },
         },
         {
