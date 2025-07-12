@@ -9,9 +9,9 @@ import {
 import { UserService } from './user.service';
 import { CreateUserRequest } from './dto/create-user.request';
 import { NoFilesInterceptor } from '@nestjs/platform-express';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { CurrentUser } from 'src/auth/current-user.decorator';
-import { TokenPayload } from 'src/auth/auth.interface';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { CurrentUser } from '../auth/current-user.decorator';
+import { TokenPayload } from '../auth/auth.interface';
 
 @Controller('/api/users')
 export class UserController {

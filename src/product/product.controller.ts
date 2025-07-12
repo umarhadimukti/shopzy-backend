@@ -14,10 +14,10 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateProductRequest } from './dto/create-product.request';
-import { CurrentUser } from 'src/auth/current-user.decorator';
-import { TokenPayload } from 'src/auth/auth.interface';
+import { CurrentUser } from '../auth/current-user.decorator';
+import { TokenPayload } from '../auth/auth.interface';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
