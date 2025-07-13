@@ -46,23 +46,20 @@ export class ProductService {
     status?: string,
     keyword?: string,
   ): Promise<Product[]> {
-    const args: Prisma.ProductFindManyArgs = {};
-
-    if (status === 'available') {
-      args.where = { sold: false };
-    }
-
-    if (keyword || keyword !== '') {
-      args.where = {
-        ...args.where,
+    
+    const filters: Prisma.ProductWhereInput = {
+      ...(status === 'available' && { sold: false }),
+      ...(keyword?.trim() && {
         OR: [
           { name: { contains: keyword, mode: 'insensitive' } },
           { description: { contains: keyword, mode: 'insensitive' } },
         ],
-      };
-    }
+      }),
+    };
 
-    const products = await this.prismaService.product.findMany(args);
+    const products = await this.prismaService.product.findMany({
+      ...(Object.keys(filters).length && { where: filters }),
+    });
 
     return Promise.all(
       products.map(async (product) => ({
