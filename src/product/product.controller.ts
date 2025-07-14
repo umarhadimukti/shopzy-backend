@@ -68,8 +68,10 @@ export class ProductController {
         ],
       }),
     )
-    _file: Express.Multer.File,
-  ) {}
+    file: Express.Multer.File,
+  ) {
+    console.log(file)
+  }
 
   @Get(':productId')
   @UseGuards(JwtAuthGuard)
